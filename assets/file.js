@@ -38,4 +38,57 @@ const images = [
     },
   ];
   
+  let currentIndex = 0;
+  
+
+  const sliderImage = document.getElementById("sliderImage");
+  const sliderTitle = document.getElementById("sliderTitle");
+  const sliderDescription = document.getElementById("sliderDescription");
+  const thumbs = document.getElementsByClassName("thumb");
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+
+  function showImage(index) {
+    currentIndex = index;
+    updateSliderContent();
+  }
+ 
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateSliderContent();
+  }
+  
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateSliderContent();
+  }
+  function updateSliderContent() {
+    sliderImage.src = images[currentIndex].src;
+    sliderImage.alt = images[currentIndex].alt;
+    sliderTitle.textContent = images[currentIndex].title;
+    sliderDescription.textContent = images[currentIndex].description;
+  
+    updateThumbnails();
+  }
+
+  function updateThumbnails() {
+    for (let i = 0; i < thumbs.length; i++) {
+      if (i === currentIndex) {
+        thumbs[i].classList.add("active");
+      } else {
+        thumbs[i].classList.remove("active");
+      }
+    }
+  }
+  
+ 
+  prevBtn.onclick = prevImage;
+  nextBtn.onclick = nextImage;
+  for (let i = 0; i < thumbs.length; i++) {
+    thumbs[i].onclick = function() {
+      showImage(i);
+    };
+  }
+  
+  updateSliderContent();
   
